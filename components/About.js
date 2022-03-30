@@ -5,11 +5,12 @@ const image = 'https://b.zmtcdn.com/data/pictures/5/18409005/489bed40fba1ae1cca2
 const title = 'Waterfall Restaurant'
 
 
-export default function About(){
+export default function About(props){
+    console.log("props",props.params)
     return(
         <View>
-            <RestaurantImage image={image}/>
-            <RestaurantTitle title={title}/>
+            <RestaurantImage image={props.image}/>
+            <RestaurantTitle title={props.params}/>
         </View>
     )
 }

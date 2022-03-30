@@ -1,15 +1,30 @@
 import React from 'react';
-import {View,Text} from 'react-native';
+import {View,Text, TextInput} from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import { localFoods } from './FoodItems';
+import { useState } from 'react';
 
 
 export default function SearchBar(){
+    const [search,setSearch] = useState("")
+    console.log("search :",search)
     return(
         <View style={{marginTop:15,flexDirection:'row'}}>
-        
-         <GooglePlacesAutocomplete 
+        {localFoods.filter((value)=>{
+            if(search === ''){
+                return value;
+            }else if(value.name.toLowerCase().includes(search?.toLowerCase()))
+            {
+                return value;
+            }
+        }).map((obj)=>(
+            <View style={{top:30,position:"absolute"}}>
+                {/* <Text>{obj.name}</Text> */}
+            </View>
+        ))}
+         {/* <GooglePlacesAutocomplete 
          placeholder='Search'
          styles={{
              textInput:{
@@ -44,6 +59,11 @@ export default function SearchBar(){
                  <Text>Search</Text>
              </View>
          )}
+         /> */}
+         <TextInput
+            placeholder='search'
+            onChangeText={(obj)=>setSearch(obj)}
+            // onChange={(obj)=>setSearch(obj)}
          />
        
         </View>

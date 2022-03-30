@@ -1,11 +1,14 @@
 import * as React from 'react';
-import { Text, View, Image, TouchableOpacity} from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons' 
+import { Text, View, Image, TouchableOpacity,TextInput } from 'react-native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import RestaurantDetail from './RestaurantDetail'; 
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import AntDesign from 'react-native-vector-icons/AntDesign'
 
 
  export const localFoods = [
     {
-        name:'undersea restaurant',
+        name:'Undersea Restaurant',
         image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgXw0pqGYwHn2ieksnWU1IoVsu7TQUfvFwsQ&usqp=CAU',
         categories:['Cafe','Bar'],
         price:"$$",
@@ -26,7 +29,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
         categories:['Cafe','Bar'],
         price:"$$",
         reviews:1214,
-        rating:4.7
+        rating:4.7,
+        
     },
     {
         name:'Holiday Inn restaurant',
@@ -46,20 +50,81 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
     },
 
 ]
-export default function FoodItems(props){
+export default function FoodItems({navigation,...props}){
+    const [search,setSearch] = React.useState("")
+   const handleButtonPress =(item,image) =>{
+        // const { title, link } = item
+        // this.props.navigation.navigate('Browser', { title, link })
+        navigation.navigate("RestaurantDetail", {item,image})
+      }
   return(
-  <TouchableOpacity activeOpacity={1} style={{marginBottom:30}}>
-      {props.FoodData.map((foods,index) =>(
-
-     
-  <View key={index} style={{marginTop:10,padding:15,backgroundColor:"black"}}>
-     <FoodImage image={foods.image}/>
-     <FoodInfo name={foods.name}
-               rating={foods.rating}
-                />
-  </View>
+      <>
+      <View style={{margin:5,padding:15,backgroundColor:"powderblue",borderRadius:30}}>
+       <TextInput style={{fontWeight:"700",color:"black"}}
+            placeholder='search'
+            onChangeText={(obj)=>setSearch(obj)}
+            // styles={{
+            //     textInput:{
+            //         backgroundColor:'#eee',
+            //         borderRadius:20,
+            //         fontWeight:"700",
+            //         marginTop:7
+            //     },
+            //     textInputContainer:{
+            //        backgroundColor:'#eee',
+            //        borderRadius:50,
+            //        flexDirection:'row',
+            //        alignItems:'center',
+            //        marginRight:10
+            //     }
+            // }}
+            // renderLeftButton={() =>(
+            //     <View style={{marginLeft:10}}>
+            //         <Ionicons name='location-sharp' size={24}/>
+            //     </View>
+            // )}
+            // renderRightButton={() =>(
+            //     <View style={{
+            //            flexDirection:'row',
+            //            marginRight:8,
+            //            backgroundColor:'white',
+            //            padding:9,
+            //            borderRadius:30,
+            //            alignItems:'center'
+            //     }}>
+            //         <AntDesign name='clockcircle' size={11} style={{marginRight:6}}/>
+            //         <Text>Search</Text>
+            //     </View>
+            // )}
+         />
+         </View>
+      {props.FoodData.filter((value)=>{
+            if(search === ''){
+                return value;
+            }else if(value.name.toLowerCase().includes(search?.toLowerCase()))
+            {
+                return value;
+            }
+        }).map((foods,index) =>(
+           <TouchableOpacity 
+           // key={index}
+           activeOpacity={1} 
+           style={{marginBottom:30}}
+           onPress={() => handleButtonPress(foods.name, foods.image) }
+           >
+              
+                <View style={{marginTop:10,padding:15,backgroundColor:"black"}}>
+                    <FoodImage image={foods.image}/>
+                    <FoodInfo name={foods.name}
+                            rating={foods.rating}
+                                />
+                </View>
+                </TouchableOpacity>
+            
    ))}
-  </TouchableOpacity>
+  
+  
+  </>
   )
 }
 

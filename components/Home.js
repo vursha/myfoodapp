@@ -7,22 +7,26 @@ import FoodItems,{localFoods} from './FoodItems';
 //import RestaurantDetail from './RestaurantDetail';
 
 
+
 export default function Home({navigation}){
     const [FoodData,setFoodData] = useState(localFoods)
     return(
-       
-         <SafeAreaView style={{backgroundColor:'#eee',flex:1}}>
+         
+         <SafeAreaView style={{backgroundColor:'white',flex:1}}>
+            
          <View style={{backgroundColor:'white',padding:15}}>
             <Header/>
-            <SearchBar/>
+            {/* <SearchBar/> */}
          </View>
-         <ScrollView >
+         <ScrollView  showsVerticalScrollIndicator ={true}
+  showsHorizontalScrollIndicator={false}>
             <Categories/>
             <FoodItems FoodData={FoodData} navigation = {navigation}/>
-           
+            
          </ScrollView>   
-          {/* <RestaurantDetail/>  */}
+         {/* <RestaurantDetail/>  */}
         </SafeAreaView>
+      
     )
 }
 
